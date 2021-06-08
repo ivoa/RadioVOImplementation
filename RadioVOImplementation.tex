@@ -25,7 +25,7 @@
 
 \section*{Acknowledgments}
 
-Authors gratefully thank all the radioastronomy projects  who provided story-telling gathered in Appendix
+Authors gratefully thank all the radioastronomy projects who provided story-telling gathered in Appendix
 
 \section*{Conformance-related definitions}
 
@@ -57,13 +57,13 @@ The scope of this document is restricted to data from heterodyne receivers worki
 
 \section{Science data}
 
-In this section we only consider high level dataproducts that can be produced from any of interferometers, single dishes etc. We defer discussion of observational data to Section 3.   
+In this section we only consider high level data products that can be produced from any of interferometers, single dishes etc. We defer discussion of observational data to Section 3.   
 
 
 
 \subsection{Radio 2D images and cubes}
 \subsubsection{Data Access Layer (DAL) services}
-The combination of the ObsCore data model and the VO's Table Access Procotol (TAP; \cite{std:TAP}), known as ObsTAP, and the SIA are classical "discovery, then access" services adapted to images and cubes, and can be used to serve radio image products. Metadata characterizing the observation needed for ObsCore can be extracted from FITS headers or observation logs. The main issues for metadata extraction are to choose the granularity and quality of datasets to expose, and to find solutions for access in cases where the datasets are huge. ObsCore tables can be served by two different interfaces, TAP  (queryable via Astronomy Data Query Language (ADQL) \citep{2008ivoa.spec.1030O} ), or SIA2 (a parameter based interface). The SIA1 interface remains a VO standard. It is a parameter based interface with a different set of parameters than SIA2. The standardised SIA1 response is not based on ObsCore and has archaic features. The SIA1 interface should be considered as a legacy standard for the first-generation of VO services. We do not recommend its implemention for new services.    
+The combination of the ObsCore data model and the VO's Table Access Procotol (TAP; \cite{std:TAP}), known as ObsTAP, and the SIA are classical "discovery, then access" services adapted to images and cubes, and can be used to serve radio image products. Metadata characterizing the observation needed for ObsCore can be extracted from FITS headers or observation logs. The main issues for metadata extraction are to choose the granularity and quality of datasets to expose, and to find solutions for access in cases where the datasets are huge. ObsCore tables can be served by two different interfaces, TAP  (queryable via Astronomy Data Query Language (ADQL) \citep{2008ivoa.spec.1030O} ), or SIA2 (a parameter based interface). The SIA1 interface remains a VO standard. It is a parameter based interface with a different set of parameters than SIA2. The standardised SIA1 response is not based on ObsCore and has archaic features. The SIA1 interface should be considered as a legacy standard for the first-generation of VO services. We do not recommend its implementation for new services.    
 
 For large datasets, where retrieval of entire images/cubes may be cumbersome,  DataLink and SODA are appropriate solutions that have been experimented with at CADC (section~\ref{sec:CADC}) and by CASDA. SODA allows the extraction of subcubes by selecting a smaller spatial coverage or spectral range. DataLink enables the linkage of a SODA interface to a specific dataset discovered with ObsTAP or SIA. Access to raw data and provenance information can also be provided via DataLink, as it is the case for INAF radio archive and ALMA science archive.
 
