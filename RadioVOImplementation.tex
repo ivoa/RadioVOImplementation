@@ -65,7 +65,7 @@ In this section we only consider high level data products that can be produced f
 \subsubsection{Data Access Layer (DAL) services}
 The combination of the ObsCore data model and the VO's Table Access Procotol (TAP; \cite{std:TAP}), known as ObsTAP, and the SIA are classical "discovery, then access" services adapted to images and cubes, and can be used to serve radio image products. Metadata characterising the observation needed for ObsCore can be extracted from FITS headers or observation logs. The main issues for metadata extraction are to choose the granularity and quality of datasets to expose, and to find solutions for access in cases where the datasets are huge. ObsCore tables can be served by two different interfaces, TAP  (queryable via Astronomy Data Query Language (ADQL) \citep{2008ivoa.spec.1030O} ), or SIA2 (a parameter based interface). The SIA1 interface remains a VO standard. It is a parameter based interface with a different set of parameters than SIA2. The standardised SIA1 response is not based on ObsCore and has archaic features. The SIA1 interface should be considered as a legacy standard for the first-generation of VO services. We do not recommend its implementation for new services. 
 
-Solar and planetary radio astronomy data products can be shared through EPN-TAP (combination of EPNcore and TAP; \cite{std:EPNTAP}).
+Solar and planetary radio astronomy data products can be shared through EPN-TAP (combination of EPNcore and TAP; \cite{std:EPNTAP}). The goal of EPN-TAP is the same as that of ObsTAP, but the metadata are dedicated to solar system observations (e.g., not requiring celestial coordinates, since solar system bodies are not fixed in this frame, but relying on the named target object).
 
 For large datasets, where retrieval of entire images/cubes may be cumbersome,  DataLink and SODA are appropriate solutions that have been experimented with at CADC (section~\ref{sec:CADC}) and by CASDA. SODA allows the extraction of sub-cubes by selecting a smaller spatial coverage or spectral range. DataLink enables the linkage of a SODA interface to a specific dataset discovered with ObsTAP or SIA. Access to raw data and provenance information can also be provided via DataLink, as it is the case for INAF radio archive and ALMA science archive.
 
@@ -84,6 +84,7 @@ A completely different way to make image data available through the VO is by usi
 \item SODA: CADC, CASDA
 \item HiPS: CASDA, Apertif, LOTSS, CGPS at CADC
 \item Applications: Aladin, DS9, TOPCAT allow discovery and simple visualisation of cubes. Neither the current CASA viewer, nor the new CARTA viewer support VO searches or SAMP \citep{2009ivoa.spec.0421B}, though CARTA has long-term plans to do so.
+\item EPN-TAP services: CDPP (AMDA), MASER (Cassini, Wind, ExPRES), Tohoku (Iitate), LOFAR (Poland), Nan\c cay (NDA)
 \end{itemize}
 
 
