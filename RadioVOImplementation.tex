@@ -69,15 +69,15 @@ Solar and planetary radio astronomy data products can be shared through EPN-TAP 
 
 For large datasets, where retrieval of entire images/cubes may be cumbersome,  DataLink and SODA are appropriate solutions that have been experimented with at CADC (section~\ref{sec:CADC}) and by CASDA. SODA allows the extraction of sub-cubes by selecting a smaller spatial coverage or spectral range. DataLink enables the linkage of a SODA interface to a specific dataset discovered with ObsTAP or SIA. Access to raw data and provenance information can also be provided via DataLink, as it is the case for INAF radio archive and ALMA science archive.
 
-The Common Archive Observation Model (CAOM) may be a good intermediary between the set of metadata in image headers metadata and VO standards. Some CAOM standard metadata map easily to Obscore attributes while others can be used to help develop SODA or DataLink services. This is the way CADC implements DAL services. DACHS \footnote{\url{http://docs.g-vo.org/DaCHS/}} is a complete python toolkit allowing to create all DAL services and register them. Data centers such as CDS, CSIRO and CADC have developed their own open java libraries (vollt, CASDA VO Tools, openCADC). These libraries can be used to develop new services.
+The Common Archive Observation Model (CAOM) may be a good intermediary between the set of metadata in image headers metadata and VO standards. Some CAOM standard metadata map easily to ObsCore attributes while others can be used to help develop SODA or DataLink services. This is the way CADC implements DAL services. DACHS \footnote{\url{http://docs.g-vo.org/DaCHS/}} is a complete python toolkit allowing to create all DAL services and register them. Data centres such as CDS, CSIRO and CADC have developed their own open java libraries (vollt, CASDA VO Tools, openCADC). These libraries can be used to develop new services.
 
 
 \subsubsection{HiPS}
-A completely different way to make image data available through the VO is by using HiPS \citep{2017ivoa.spec.0519F}. HiPS provides a hierarchical progressive access to pixels. It can be used for 2D images and 3D cubes. In the radio domain, it is often used for 2D images produced from spectral cubes. The ``tile progenitor''  functionality may be used to help discover original images or cubes. Astron has published HiPS for Apertif and LOFAR data, and CADC for CGPS(section~\ref{sec:CADC}). Several software packages are able to produce HiPS images, and when that is done no more software is needed to install a HiPS server - a simple http server allows access to the hierarchical data. There are several VO applications able to visualize HiPS (AladinLite, Aladin Desktop, Stellarium, etc...). 
+A completely different way to make image data available through the VO is by using HiPS \citep{2017ivoa.spec.0519F}. HiPS provides a hierarchical progressive access to pixels. It can be used for 2D images and 3D cubes. In the radio domain, it is often used for 2D images produced from spectral cubes. The ``tile progenitor''  functionality may be used to help discover original images or cubes. ASTRON has published HiPS for Apertif and LOFAR data, and CADC for CGPS(section~\ref{sec:CADC}). Several software packages are able to produce HiPS images, and when that is done no more software is needed to install a HiPS server - a simple http server allows access to the hierarchical data. There are several VO applications able to visualise HiPS (AladinLite, Aladin Desktop, Stellarium, etc...). 
 
 \subsubsection{List of working services}
 \begin{itemize}
-\item ObsTAP services: ALMA(section~\ref{sec:ALMA}), CADC (VLA Sky Survey, Canadian Galactic Plane Survey -DRAO-, other DRAO data, VLA Galactic Plane Survey, Section~\ref{sec:CADC}), CSIRO (CASDA, ATOA - Section~\ref{sec:CASDA}), Astron (section~\ref{sec:Astron}).
+\item ObsTAP services: ALMA(section~\ref{sec:ALMA}), CADC (VLA Sky Survey, Canadian Galactic Plane Survey -DRAO-, other DRAO data, VLA Galactic Plane Survey, Section~\ref{sec:CADC}), CSIRO (CASDA, ATOA - Section~\ref{sec:CASDA}), ASTRON (section~\ref{sec:Astron}).
 \item SIA1: CADC, Astron (APERTIF,LOTSS), Skyview/GSFC (FIRST, NVSS)
 \item SIA2: ALMA, CADC, CASDA, ASTRON (APERTIF, LOTSS)
 \item DataLink: ALMA, CADC, CASDA
@@ -113,8 +113,8 @@ Extraction of radio sources from survey images generates catalogues of sources. 
 \subsection{TimeSeries, dynamical spectra, pulsar data}
 
 Data sampled on rapid (millisecond) timescales are common in pulsar astronomy and the study of Fast Radio Bursts (FRBs). 
-Solar system objects (the Sun, and some planets, such as Jupiter), also can show rapid time variability in their radio emission. Data streams typically capture flux variations along with frequency and polarization information, in the form of ``dynamical spectra".
-These products may be described with ObsCore and exposed through TAP or, in some cases, SIA. Dataproduct\_type ``timeseries" may be ambiguous for dynamical spectra, so a dataproduct\_subtype can be used. Such data are made available through JIVE (section~\ref{sec:JIVE}) and Nançay (section~\ref{sec:Nancay}) services and also  by the Parkes Pulsar Data Archive (PSRDA).
+Solar system objects (the Sun, and some planets, such as Jupiter), also can show rapid time variability in their radio emission. Data streams typically capture flux variations along with frequency and polarisation information, in the form of ``dynamic spectra".
+These products may be described with ObsCore and exposed through TAP or, in some cases, SIA. Dataproduct\_type ``timeseries" may be ambiguous for dynamical spectra, so a dataproduct\_subtype can be used. Such data are made available through JIVE (section~\ref{sec:JIVE}) and Nan\c cay (section~\ref{sec:Nancay}) services and also  by the Parkes Pulsar Data Archive (PSRDA).
 
 \subsection{Using MOC for discovery}
 
