@@ -576,7 +576,14 @@ Metadata from the RPFITS, SDFITS and HDF5 files are retrieved as part of deposit
 A copy of the metadata is made to a PostgreSQL database where it is made available for TAP queries against an ObsCore schema. 
 All data are online and available to both web and VO users for download.
 
-\subsection{ASTRON VO services}\label{sec:Astron}
+\subsection{ASTRON}\label{sec:Astron}
+The Netherlands Institute for Radio Astronomy (ASTRON) is responsible for the operations of several radio astronomical facilities. The major surveys are and will be made accessible through the   {\href{https://vo.astron.nl/}{ASTRON VO service}}, running an instance of of DaCHS \citep{10.1016/j.ascom.2014.08.003}. Also, HiPS data is being offered through \href{https://hips.astron.nl/}{another service}. Currently, those services contain data from the Westerbork Synthesis Radio Telescope (WSRT), the Apertif system, the LOw Frequency ARray (LOFAR). Also, the Alternative Data Release of the the TIFR GMRT Sky Survey (TGSSADR), which is used as a sky model for LOFAR observations, is served through the ASTRON VO.
+
+Currently, all releases of data through the ASTRON VO have been of imaging surveys (like Apertf DR1 or LoTSS DR1). This data can be easily shared using the existing VO standards like SIAP2, TAP and ObsCore. Also since the image data format generally is FITS, the metadata gathering can be done in the same way as one would do it for other wavelengths. However, due to the fact that single images are taking up a lot of disk space, storage at an external location (e.g. a national supercompute centre) may be needed. We have developed tooling to only download the header from a remotely saved FITS file, and save it to csv format, so that not all data needs to be downloaded just to read their header. The csv files can then be used as input for the metadata gathering. For access to the data, DataLinks link to the remote resources. Also, we are investigating if this can be combined with using SODA cutouts to minimise the amount of data that is actually shipped to the end users.  
+
+One of the forthcoming data releases is that of the Apertif FRB data (ARTS-DR1). It is to be expected that more releases of timing data (pulars, FRBs, etc) will follow. Futhermore, LOFAR data from solar observations are candidates to be made public, which would require using of the appropriate standards for solar-system objects. 
+
+Visibilities are currently being shared as part of the metadata, as part of the provenance through DataLinks. Since all visibilities are stored on tapes, access to them cannot be granted sychronously. The current implementation uses a web page showing relevant information, with hints to users on how to request access through the helpdesk. For future data releases, we consider developing a UWS staging service that can handle the process of bringing data online. Even though directly querying visibilities from LOFAR or Apertif in the VO is not currently planned, ASTRON is involved in the development of visibilities standards, which could be used for specific data collections that may be released in the future. 
 
 \subsection{MERLIN}\label{sec:MERLIN}
 
