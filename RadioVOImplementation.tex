@@ -46,12 +46,12 @@ infrastructure that enable VO applications.
 
 \section{Introduction}
 
-Radio astronomy data were considered in the first decade of IVOA, within the Char/Observation data 
-model and the first version Simple Image Access (SIA1, \cite{std:SIAP}). When multidimensional data 
-science became a CSP priority (2013), this drove the emergence of new protocols that included 
-treatment of polarisation and image cubes, both important for radio astronomy:\\ ObsCore
-\citep{std:OBSCORE}, SIA2 \citep{std:SIAV2} , DataLink \citep{2015ivoa.spec.0617D} and SODA
-\citep{std:SODA}. 
+Radio astronomy data were considered in the first decade of IVOA, within the Characterisation data 
+model \citep{2008ivoa.spec.0325L} and the first version Simple Image Access (SIA1, \cite{std:SIAP}). 
+When multidimensional data science became a CSP priority (2013), this drove the emergence of new 
+protocols that included treatment of polarisation and image cubes, both important for radio 
+astronomy: ObsCore \citep{std:OBSCORE}, SIA2 \citep{std:SIAV2} , DataLink \citep{2015ivoa.spec.0617D} 
+and SODA \citep{std:SODA}. 
 
 Since that time, radio astronomy projects have further increased in size and variety, necessitating 
 a review of how the VO can better work with radio data. In this document, we begin this process as 
@@ -93,13 +93,6 @@ different set of parameters than SIA2. The standardised SIA1 response is not bas
 archaic features. The SIA1 interface should be considered as a legacy standard for the first-generation 
 of VO services. We do not recommend its implementation for new services. 
 
-Solar and planetary radio astronomy data products can be shared through EPN-TAP (combination of EPNcore 
-and TAP; \cite{std:EPNTAP}). The goal of EPN-TAP is the same as that of ObsTAP, but the metadata are 
-dedicated to solar system observations (e.g., not requiring celestial coordinates, since solar system 
-bodies are not fixed in this frame, but relying on the named target object). EPN-TAP services are 
-accessible from any TAP client, but the VESPA query portal (Virtual European Solar and Planetary Access, 
-\url{http://vespa.obspm.fr}) allows to search in all registered EPN-TAP services at once.
-
 For large datasets, where retrieval of entire images/cubes may be cumbersome,  DataLink and SODA are 
 appropriate solutions that have been experimented with at CADC (section~\ref{sec:CADC}) and by CASDA. 
 SODA allows the extraction of sub-cubes by selecting a smaller spatial coverage or spectral range. 
@@ -139,8 +132,6 @@ Section~\ref{sec:CASDA}), ASTRON (section~\ref{sec:Astron}).
 \item Applications: Aladin, DS9, TOPCAT allow discovery and simple visualisation of cubes. Neither the 
 current CASA viewer, nor the new CARTA viewer support VO searches or SAMP \citep{2009ivoa.spec.0421B}, 
 though CARTA has long-term plans to do so.
-\item EPN-TAP services: CDPP (AMDA), MASER (Cassini, Wind, ExPRES), Tohoku (Iitate), LOFAR (Poland), 
-Nan\c cay (NDA)
 \end{itemize}
 
 
@@ -178,16 +169,15 @@ section~\ref{sec:CASDA} - , CDS/VizieR
 Data sampled on rapid (millisecond) timescales are common in pulsar astronomy and the study of Fast 
 Radio Bursts (FRBs). 
 
-Solar system objects (the Sun, and some planets, such as Jupiter), also can show rapid time variability 
-in their radio emission. Data streams typically capture flux variations along with frequency and 
-polarisation information, in the form of ``dynamic spectra".
+Solar system objects (the Sun, and some planets, such as Jupiter), also can show 
+rapid time variability in their radio emission. Data streams typically capture flux variations along 
+with frequency and polarisation information, in the form of ``dynamic spectra".
 
 These products may be described with ObsCore and exposed through TAP or, in some cases, SIA. 
 Dataproduct\_type ``timeseries" may be ambiguous for dynamic spectra, so a dataproduct\_subtype can be 
 used, or a new dataproduct\_type may be introduced. Such data are made available through JIVE 
 (section~\ref{sec:JIVE}) and Nan\c cay (section~\ref{sec:Nancay}) services and also by the Parkes Pulsar 
 Data Archive (PSRDA).
-
 
 \subsection{Using MOC for discovery}
 
@@ -444,6 +434,49 @@ at the source of the data and at CADC, and with developers that translate the ma
 (pipelines) built from common libraries and customised for the collection. These pipelines create and 
 persist CAOM instances from metadata databased and/or from files.
 
+\subsection{MASER}
+\label{sec:maser}
+
+The MASER (Measurement, Analysis and Simulation of Emissions in the Radio range) is providing the 
+community with a science-ready toolbox for low frequency radio astronomy (below 100 MHz). 
+
+The Sun and planets of our Solar System are emitting radio waves through non-thermal radio emission 
+processes (plasma instabilities, mode conversion, electrostatic discharges...) and they are the dominant 
+radio sources in the lower frequency range (below 50 MHz). Down to 10 MHz ground-based radio telescopes
+are used, while space observation are required at lower frequencies. Radio astronomy Solar System 
+observations are mostly dynamic spectra, but 2D images, event catalogues and timeseries are also 
+applicable. Solar System radio sources are often sporadic and are monitored over long periods of time, 
+with continuous or daily observations. 
+
+Solar and planetary radio astronomy data products can be shared through EPN-TAP (combination of EPNcore 
+and TAP; \cite{std:EPNTAP}). The goal of EPN-TAP is the same as that of ObsTAP, but the metadata are 
+dedicated to solar system observations (e.g., not requiring celestial coordinates, since solar system 
+bodies are not fixed in this frame, but relying on the named target objects). EPN-TAP services are 
+accessible from any TAP client, but the VESPA query portal (Virtual European Solar and Planetary Access, 
+\url{http://vespa.obspm.fr}) allows to search in all registered EPN-TAP services at once.
+
+Accessing data collection spanning over long time periods, and browsing through them is a challenge. 
+The space science community has developed several protocols for accessing timeseries or dynamic spectra 
+with dedicated server-client architecture. For radio astronomy, Das2 \citep{10.1002/essoar.10500359.1} 
+provides the required capabilities, including a server-side resampling option. The latter feature is 
+the key here: the Das2 client queries the server with a specific temporal resolution (e.g., its display
+resolution). The server sends the data according to this query, with an optimised use of the network
+bandwidth. The Das2 endpoints of a given collection can be published accessible in the EPN-TAP service 
+response, through the Datalink interface.
+
+The distribution of radio astronomy event catalogues also require specific elements that are not yet
+fully available in the IVOA framework. A TFCat (Time-Frequency Catalogue) model and format has been 
+developed to support complex spectro-temporal shapes and features. This model is currently being 
+tested and has been presented to the IVOA community. 
+
+\begin{itemize}
+\item EPN-TAP services: CDPP (AMDA), MASER (Cassini, Wind, ExPRES), Tohoku Univ.\ (Iitate), LOFAR 
+(Poland), Nan\c cay (NDA, \emph{NRH, ORFEES})
+\item Das2 services: MASER (Cassini, Voyager, ExPRES, \emph{STEREO}), Nan\c cay (NDA, \emph{NenuFAR}), 
+Univ.\ Iowa (Galileo, Mars Expres, Juno, Cassini, LWA, Kharkov UTR-2)
+\end{itemize}
+Note: the services in \emph{italic} are prototypes.
+
 \subsection{Nan\c cay}
 \label{sec:Nancay}
 %Baptiste and Alan input
@@ -476,7 +509,10 @@ International Solar Terrestrial Program (ISTP) specifications;
 \item Observation quicklooks in PDF format for both polarisation.
 \end{itemize}
 
-The NDA data is also available through a \emph{Das2} \citep{10.1002/essoar.10500359.1} interface, which is a data streaming interface for time dependent data. The Das2 server is providing server-side resampling as configured in the query of a Das2 client (e.g., Autoplot; \cite{10.1007/s12145-010-0049-0}). The Das2 endpoint for NDA data is accessible in the EPN-TAP service response, through the Datalink interface.
+The NDA data is also available through a \emph{Das2} \citep{10.1002/essoar.10500359.1} interface, which 
+is a data streaming interface for time dependent data. The Das2 server is providing server-side 
+resampling as configured in the query of a Das2 client (e.g., Autoplot; \cite{10.1007/s12145-010-0049-0}). 
+The Das2 endpoint for NDA data is accessible in the EPN-TAP service response, through the Datalink interface.
  
 \subsubsection{NRH and ORFEES}
 NRH and ORFEES are two instruments dedicated to the radio monitoring of the Sun, with applications to 
