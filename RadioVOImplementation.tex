@@ -363,9 +363,10 @@ The Joint Institute for VLBI in Europe (JIVE) hosts the archive of all radio-ast
 observations of the European VLBI Network (EVN). The datasets are archived as raw interferometric 
 visibilities in FITS-IDI format (a registered FITS convention\footnote{\url{ http://fits.gsfc.nasa.gov/
 registry/fitsidi.html}}) or in the deprecated UVFITS format for the oldest datasets. The latter format 
-is deprecated because it is not an officially registered FITS convention. The raw visibilities are the 
-result of processing ("correlation") and should be regarded as Data Level (DL) 1. The DL0 data, the raw 
-digitised, sampled, voltages from the antennas, is too big to archive and are deleted after correlation.
+is deprecated because it uses random groups and the use of random groups is discouraged in the current
+FITS standard. The raw visibilities are the result of processing ("correlation") and should be regarded
+as Data Level (DL) 1. The DL0 data, the raw digitised, sampled, voltages from the antennas, is too big to
+archive and are deleted after correlation.
 
 Connected to the raw visibilities, the EVN archive stores initial calibration information, flagging 
 information, diagnostic plots and the output products of running a generic pipeline. All these artefacts 
@@ -374,12 +375,13 @@ quality and/or scientific potential.
 
 JIVE is working towards making these raw visibilities and support information findable and downloadable 
 through ObsTAP and DataLink services; none of the other IVOA services apply naturally to unprocessed 
-interferometric data. The pipeline outputs crude images of a subset of the observed sources (the 
+interferometric data. The pipeline outputs crude images of the observed sources (including the
 calibrator(s)). These images will be added as thumbnail/preview images to ObsCore entries through 
 DataLink. There is no point in offering these through e.g. SIAP since the images are not at all science 
 quality. An important envisaged use case of making the raw visibilities available through VO protocols 
 is that this will allow users to find and download historic observations and reprocess them with modern 
-software.
+software.  A preliminary service that offers ObsTAP and DataLink is up and running but has not been
+registered yet.
 
 The FITS-IDI files contain sufficient meta-data to parse almost all the necessary ObsCore parameters 
 from there. The raw visibility data sets tend to be large (2020 standards). Typical sizes vary from 
