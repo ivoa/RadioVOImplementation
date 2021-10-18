@@ -1,6 +1,6 @@
 
-\documentclass[11pt,a4paper]{ivoa}
-\input tthdefs
+\documentclass[11pt,a4paper]{ivoatex/ivoa}
+\input ivoatex/tthdefs
 
 \title{Radio Astronomy in the VO:\\ implementation note} 
 
@@ -9,6 +9,7 @@
 
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/MarkLacy]{Mark Lacy}
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/FrancoisBonnarel]{Fran\c cois Bonnarel}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/PaulHarrison]{Paul Harrison}
 \author{The RadioAstronomy Interest Group}
 
 \editor{Mark Lacy, Fran\c cois Bonnarel}
@@ -288,6 +289,21 @@ For the downloads through DataLink there are at least four hierarchy
 levels of the data that people could be interested in accessing (Project, ObsUnitSet, Source or Spectral
 Window). We hope that through astroquery those can be made available to the users. The download of
 proprietary data through astroquery and DataLink is in the works.
+
+\subsection{e-MERLIN}
+\label{sec:emerlin}
+The staff of e-MERLIN telescope network (\url{http://www.e-merlin.ac.uk}) and its predecessor MERLIN have had a long association with the virtual
+observatory via involement with the AstroGrid project \citep{2002ASPC..281....3M}. An early service that
+ provided `on-demand' images from visibility data was described in a paper somewhat optimistically entitled
+``Painless Access to Interferometry Images Comes Closer'' \citep{2006ASPC..351..267R}. This service pre-dated standards
+such as SODA which might have been considered for use in creating such a service - although SODA in itself does not
+have sufficient power to express all of the parameterization that service provided. Unfortunately, with the cessation
+of funding of AstroGrid in 2009, further development of the software suite also stopped. The main effort in e-MERLIN was 
+put into providing a processing pipeline \footnote{\url{https://github.com/e-merlin/eMERLIN_CASA_pipeline}} and archive data access to
+PIs using non-VO compliant methods. Recently, however, work has restarted on adding modern VO compatibility to e-MERLIN
+archive access as a pilot for the UK SKA regional centre \footnote{\url{https://astronomers.skatelescope.org/the-ska-regional-centres/}}.
+The source code for the new VO capabilities derives in part from the original AstroGrid source and is being managed under the
+``Javastro'' GitHub project \url{https://github.com/Javastro}.
 
 \subsection{INAF Radio Data}
 \label{sec:INAF}
