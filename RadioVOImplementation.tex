@@ -7,10 +7,20 @@
 % see ivoatexDoc for what group names to use here
 \ivoagroup{Radio Astronomy interest group}
 
-\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/MarkLacy]{Mark Lacy}
+
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/FrancoisBonnarel]{Fran\c cois Bonnarel}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/BaptisteCecconi]{Baptiste Cecconi}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/JamesDempsey]{James Dempsey}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/SeverinGaudet]{Severin Gaudet}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/YanGrange]{Yan Grange}
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/PaulHarrison]{Paul Harrison}
-\author{The RadioAstronomy Interest Group}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/MarkKettenis]{Mark Kettenis
+}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/MarkLacy]{Mark Lacy}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/AlanLoh]{Alan Loh}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/FelixStoehr]{Felix Stoehr}
+\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/AlessandraZanichelli]{Alessandra Zanichelli}
+\author{and the RadioAstronomy Interest Group}
 
 \editor{Mark Lacy, Fran\c cois Bonnarel}
 
@@ -61,7 +71,7 @@ follows:
 \begin{itemize}
 \item  In Sections 2 and 3 below, we give a list of existing radio astronomy VO services with protocol 
 used for ALMA (section~\ref{sec:ALMA}), LOFAR (section~\ref{sec:Astron}), ASKAP, ATCA,
-(section~\ref{sec:CASDA}) NRAO and CGPS (section~\ref{sec:CADC}) and MERLIN (section~\ref{sec:MERLIN}).
+(section~\ref{sec:CASDA}) NRAO and CGPS (section~\ref{sec:CADC}) and e-MERLIN (section~\ref{sec:emerlin}).
 The content of these Sections is organised  by category of data and then type of services. Section 2 
 presents science data, Section 3 concentrates on raw (visibility) data. We try to extract some generic 
 lessons on how services can proceed to build services.
@@ -93,6 +103,8 @@ based interface). The SIA1 interface remains a VO standard. It is a parameter ba
 different set of parameters than SIA2. The standardised SIA1 response is not based on ObsCore and has 
 archaic features. The SIA1 interface should be considered as a legacy standard for the first-generation 
 of VO services. We do not recommend its implementation for new services. 
+
+For solar system data EPN-TAP is an equivalent to ObsTAP which implements some specificities required for this kind of data (sections~\ref{sec:maser} and~\ref{sec:Nancay}). 
 
 For large datasets, where retrieval of entire images/cubes may be cumbersome,  DataLink and SODA are 
 appropriate solutions that have been experimented with at CADC (section~\ref{sec:CADC}) and by CASDA. 
@@ -130,7 +142,7 @@ Section~\ref{sec:CASDA}), ASTRON (section~\ref{sec:Astron}).
 \item DataLink: ALMA, CADC, CASDA
 \item SODA: CADC, CASDA
 \item HiPS: CASDA, Apertif, LOTSS, CGPS at CADC
-\item Applications: Aladin, DS9, TOPCAT allow discovery and simple visualisation of cubes. Neither the 
+\item Applications: Aladin, CASSIS,  DS9, TOPCAT allow discovery and simple visualisation of cubes. Neither the 
 current CASA viewer, nor the new CARTA viewer support VO searches or SAMP \citep{2009ivoa.spec.0421B}, 
 though CARTA has long-term plans to do so.
 \end{itemize}
@@ -290,6 +302,95 @@ levels of the data that people could be interested in accessing (Project, ObsUni
 Window). We hope that through astroquery those can be made available to the users. The download of
 proprietary data through astroquery and DataLink is in the works.
 
+\subsection{ASTRON}\label{sec:Astron}
+The Netherlands Institute for Radio Astronomy (ASTRON) is responsible for the operations of several radio astronomical facilities. The major surveys are and will be made accessible through the   {\href{https://vo.astron.nl/}{ASTRON VO service}}, running an instance of of DaCHS \citep{10.1016/j.ascom.2014.08.003}. Also, HiPS data is being offered through \href{https://hips.astron.nl/}{another service}. Currently, those services contain data from the Westerbork Synthesis Radio Telescope (WSRT), the Apertif system, the LOw Frequency ARray (LOFAR). Also, the Alternative Data Release of the the TIFR GMRT Sky Survey (TGSSADR), which is used as a sky model for LOFAR observations, is served through the ASTRON VO.
+
+Currently, all releases of data through the ASTRON VO have been of imaging surveys (like Apertf DR1 or LoTSS DR1). This data can be easily shared using the existing VO standards like SIAP2, TAP and ObsCore. Also since the image data format generally is FITS, the metadata gathering can be done in the same way as one would do it for other wavelengths. However, due to the fact that single images are taking up a lot of disk space, storage at an external location (e.g. a national supercompute centre) may be needed. We have developed tooling to only download the header from a remotely saved FITS file, and save it to csv format, so that not all data needs to be downloaded just to read their header. The csv files can then be used as input for the metadata gathering. For access to the data, DataLinks link to the remote resources. Also, we are investigating if this can be combined with using SODA cutouts to minimise the amount of data that is actually shipped to the end users.  
+
+One of the forthcoming data releases is that of the Apertif FRB data (ARTS-DR1). It is to be expected that more releases of timing data (pulars, FRBs, etc) will follow. Futhermore, LOFAR data from solar observations are candidates to be made public, which would require using of the appropriate standards for solar-system objects. 
+
+Visibilities are currently being shared as part of the metadata, as part of the provenance through DataLinks. Since all visibilities are stored on tapes, access to them cannot be granted sychronously. The current implementation uses a web page showing relevant information, with hints to users on how to request access through the helpdesk. For future data releases, we consider developing a UWS staging service that can handle the process of bringing data online. Even though directly querying visibilities from LOFAR or Apertif in the VO is not currently planned, ASTRON is involved in the development of visibilities standards, which could be used for specific data collections that may be released in the future. 
+
+\subsection{CADC}
+\label{sec:CADC}
+%Severin's input
+because we use the CAOM data model for all collections, implementation has been at 3 levels:
+CAOM workshops have made a point of involving people working with radio and millimetre data so their 
+input on supporting radio data use cases drove some of the evolution of the CAOM data model (currently 
+at version 2.4).
+
+CADC has always been involved in the IVOA and has taken on the effort to support VO protocols and models 
+within the core of the CADC software architecture. In that sense, all CADC users use "the VO".  An 
+example: if a data centre is building a query page, build it with a TAP backend.
+
+The data engineering work for a new collection is third type of implementation. This is the effort to 
+map a collection's metadata into CAOM2 concepts. That involves working with science domain experts both 
+at the source of the data and at CADC, and with developers that translate the mapping into code 
+(pipelines) built from common libraries and customised for the collection. These pipelines create and 
+persist CAOM instances from metadata databased and/or from files.
+
+\subsection{CDS}
+\label{sec:CDS}
+CDS is not an observatory archive. It's a value added data center aiming at distribute published data. Related to this data center activity CDS also developped a strong expertise in VO standards with participation to their creation and evolution.  
+
+\subsubsection{VizieR and SPECFIND}
+
+VizieR is a huge collection of astronomical  catalogues associated with publications. At the time of writing VizieR gives access to more than 2900 catalogues containing radiosources or radio measurements with a complement of more thna 200 milletric . It also provides access to radio images and cubes associated to publications. IN addtion, since 2005 CDS was able to cross-identify 1600000 radio sources among 204 tables and to provide recosntructed spectra for 340000 of tem. SPECFIND 3.0 has been published in 2021 \citep{2020yCat.8104....0S}   
+
+
+\subsubsection{HiPS}
+CDS is not storing original images and cubes from observatory archives. However it is storing  a large collection of image, catalogue and cube HiPS. Dozens of them belong to the radio domain, from Effelsberg to SCUBA and from LOFAR to Apertif. HiPS is both an access and visualisation facility for pixel and catalogue data as well as it can be a discovery tool for original data. 
+
+\subsubsection{Old and recent contribution to standardization useful for radio data: visibility data ObsTAP testbed and ObsCore extension }
+
+CDS participated to the development of many standards useful for discovery and access of radio data such as VOTable, SAMP, Characterisation DM and Obscore, SIA 2.0, SODA, DataLink, HiPS and MOC. 
+Recently discovery of visibility data became a strong requirement of the community. Within the scope of the european ESCAPE project, CDS experimented the development of a testbed service exposing some visibility measurement sets as a set of consistent ObsCore datasets by separating the different fields, spectral ranges and spectral resolutions present in each observation \citep{2020arXiv201209273L}. The limits encountered in this exercice were a strong driver to start defining the ObsCore extension for  visibility data specifications.
+
+
+\subsection{CSIRO Radio Archives}\label{sec:CASDA}
+
+\subsubsection{CASDA}
+
+The CSIRO ASKAP Science Data Archive (CASDA) aims to provide science ready data products from the Australian Square Kilometre Array Pathfinder (ASKAP) telescope. 
+We use FITS format for images, cubes, spectra and moment maps, and VOTable format for Catalogue data. 
+In addition we provide validation data-products as tar files and calibrated visibilities for some observations in tarred CASA measurement set format.
+
+We provide three means of discovering and accessing data, a) via the website \footnote{https://data.csiro.au}, b) using VO protocols and c) using the astroquery.casda module. 
+Discovery for the web site uses an ElasticSearch index while the TAP, SIAP and SSAP services query our PostgreSQL metadata database. 
+Our Implementation of these protocols is available publicly as CASDA VO Tools \footnote{https://doi.org/10.25919/zy6w-h884}.
+All science data products are listed in the ObsCore view, however metadata for visibilities is limited. 
+Data access for all three access paths goes through the same module implementing the Datalink and SODA protocols. 
+Currently all data are held on tape and, if not already online, are recalled on demand to disc as part of the data access process. 
+We are working to move to an object store and have all data online.
+
+During deposit of data products we extract metadata from FITS and VOTable files including position and observation information.
+These are then stored in a PostgreSQL database which is directly queried by the VO services and is used to populate the ElasticSearch index.
+As part of the processing, validation reports are produced for each observation including quality metrics.
+These can be viewed on the website and queried via TAP.su
+The science teams are also validating the data products and providing quality ratings and notes.
+These can be accessed via the website and the quality ratings can be found in all data-products in their ObsCore listing.
+
+\subsubsection{PSRDA}
+
+The Pulsar Data Archive (PSRDA) provides pulsar observations taken predominantly at the Parkes 64m radio telescope.
+All data are in PSRFITS format and data include both search and fold mode observations.
+The index of observations may be queried via TAP. Data access is only provided via the website \footnote{https://data.csiro.au}.
+
+During deposit, metadata such as target, central frequency, the frontend and backend used, and the duration of the observation are extracted from the FITS headers and stored in a PostgreSQL database.
+This is indexed by ElasticSearch for use in queries on the website.
+Currently all data are held on tape and, if not already online, are recalled on demand to disc as part of the data access process.
+Future work will bring all data online via an object store.
+
+\subsubsection{ATOA}
+
+The Australia Telescope Online Archive (ATOA) serves spectral line observations from both the Australia Telescope Compact Array (ATCA) and Parkes.
+Most ATCA data is in in the form of visibilities in RPFITS format, with files split by time and thus containing multiple sources and spectral windows.
+Older spectral line Parkes data are in SDFITS format while data from the latest Parkes receivers are in HDF5 format with metadata based on SDFITS.
+
+Metadata from the RPFITS, SDFITS and HDF5 files are retrieved as part of deposit processing and stored in a MySQL database. Web searches on the ATOA site \footnote{https://atoa.atnf.csiro.au/} use this database.
+A copy of the metadata is made to a PostgreSQL database where it is made available for TAP queries against an ObsCore schema. 
+All data are online and available to both web and VO users for download.
+
 \subsection{e-MERLIN}
 \label{sec:emerlin}
 The staff of e-MERLIN telescope network (\url{http://www.e-merlin.ac.uk}) and its predecessor MERLIN have had a long association with the virtual
@@ -412,45 +513,7 @@ It might be possible to create a union s\_region of all the FoVs over all EVN ob
 archive and offer that as a MOC, however this is not a primary goal. If time and resources allow it 
 might be considered.
 
-\subsection{The Murchison Wide-Field Array}
-\label{sec:MWA}
-%from Harrison Barlow
-The MWA supports the implementation of various VO standards, which helps to ensure that all data follows 
-FAIR access principals. Our usage of some of these protocols are described below:
-\begin{itemize}
-\item TAP - The MWA ASVO provides an IVOA compliant Table Access Protocol (TAP) service, which can be 
-used by any VO/TAP compliant software such as TOPCAT to retrieve WMA observation metadata. Our TAP 
-service supports the standard IVOA "ObsCore" schema, in addition to some new MWA-specific schema for 
-richer observation metadata. Our implementation is courtesy of CASDA VOTools 
-\url{https://github.com/csiro-rds/casda_vo_tools}.
-\item VOTable - Users of the MWA ASVO are able to download observation metadata in a VOTable XML format 
-which is compatible with widely used astronomical software.
-\item Cone Search - The MWA ASVO implements the simple cone search protocol allowing users to quickly
-and easily find astronomical sources of interest.
-\item ADQL - In addition to our custom-developed search interface, users can also query the MWA TAP
-service using Astronomical Data Query Language (ADQL).
-\item SSO - While not specific to the IVOA, the MWA ASVO implements a number of different authentication 
-methods which are approved by the IVOA. These include logging in with a large number of federated 
-identity providers with SAML, as well as oAuth integration with AAO Data Central.
-\end{itemize}
 
-\subsection{CADC}
-\label{sec:CADC}
-%Severin's input
-because we use the CAOM data model for all collections, implementation has been at 3 levels:
-CAOM workshops have made a point of involving people working with radio and millimetre data so their 
-input on supporting radio data use cases drove some of the evolution of the CAOM data model (currently 
-at version 2.4).
-
-CADC has always been involved in the IVOA and has taken on the effort to support VO protocols and models 
-within the core of the CADC software architecture. In that sense, all CADC users use "the VO".  An 
-example: if a data centre is building a query page, build it with a TAP backend.
-
-The data engineering work for a new collection is third type of implementation. This is the effort to 
-map a collection's metadata into CAOM2 concepts. That involves working with science domain experts both 
-at the source of the data and at CADC, and with developers that translate the mapping into code 
-(pipelines) built from common libraries and customised for the collection. These pipelines create and 
-persist CAOM instances from metadata databased and/or from files.
 
 \subsection{MASER}
 \label{sec:maser}
@@ -494,6 +557,29 @@ tested and has been presented to the IVOA community.
 Univ.\ Iowa (Galileo, Mars Expres, Juno, Cassini, LWA, Kharkov UTR-2)
 \end{itemize}
 Note: the services in \emph{italic} are prototypes.
+
+\subsection{The Murchison Wide-Field Array}
+\label{sec:MWA}
+%from Harrison Barlow
+The MWA supports the implementation of various VO standards, which helps to ensure that all data follows 
+FAIR access principals. Our usage of some of these protocols are described below:
+\begin{itemize}
+\item TAP - The MWA ASVO provides an IVOA compliant Table Access Protocol (TAP) service, which can be 
+used by any VO/TAP compliant software such as TOPCAT to retrieve WMA observation metadata. Our TAP 
+service supports the standard IVOA "ObsCore" schema, in addition to some new MWA-specific schema for 
+richer observation metadata. Our implementation is courtesy of CASDA VOTools 
+\url{https://github.com/csiro-rds/casda_vo_tools}.
+\item VOTable - Users of the MWA ASVO are able to download observation metadata in a VOTable XML format 
+which is compatible with widely used astronomical software.
+\item Cone Search - The MWA ASVO implements the simple cone search protocol allowing users to quickly
+and easily find astronomical sources of interest.
+\item ADQL - In addition to our custom-developed search interface, users can also query the MWA TAP
+service using Astronomical Data Query Language (ADQL).
+\item SSO - While not specific to the IVOA, the MWA ASVO implements a number of different authentication 
+methods which are approved by the IVOA. These include logging in with a large number of federated 
+identity providers with SAML, as well as oAuth integration with AAO Data Central.
+\end{itemize}
+
 
 \subsection{Nan\c cay}
 \label{sec:Nancay}
@@ -550,60 +636,11 @@ interactive interface. Two EPN-TAP services are developed (one for each instrume
 \subsubsection{NenuFAR}
 NenuFAR (\url{https://nenufar.obs-nancay.fr/en/astronomer/}) is a new radioastronomy instrument, operating in the 10 to 85 MHz frequency band. Data can be acquired through four distinct observing modes, which rely on specific receivers and instrument configurations. An Obs-TAP service will be provided for the 'Standalone Beamformer' mode. In this operating configuration, NenuFAR acts as a low-frequency phased array instrument, beamforming data from 96 sub-arrays called 'Mini-Arrays'. The latter are consisting of 19 analog-phased crossed-dipoles gathered in hexagonal tiles, each of them rotated with respect to the others. Dynamic Spectrum data computation is achieved thanks to the UnDySPuTeD backend, with time and frequency resolutions ranging from 0.30 to 84.00 ms and from 0.10 to 12.20 kHz respectively. Reduced data (cleaned of radio-frequency interferences, corrected from instrument systematics, averaged in time/frequency and/or selected over given time periods or frequency bands) will be distributed, either in FITS or HDF5 format (with LOFAR compliant content). Quicklooks will also be delivered in PDF format.
 
-\subsection{CSIRO Radio Archives}\label{sec:CASDA}
 
-\subsubsection{CASDA}
 
-The CSIRO ASKAP Science Data Archive (CASDA) aims to provide science ready data products from the Australian Square Kilometre Array Pathfinder (ASKAP) telescope. 
-We use FITS format for images, cubes, spectra and moment maps, and VOTable format for Catalogue data. 
-In addition we provide validation data-products as tar files and calibrated visibilities for some observations in tarred CASA measurement set format.
 
-We provide three means of discovering and accessing data, a) via the website \footnote{https://data.csiro.au}, b) using VO protocols and c) using the astroquery.casda module. 
-Discovery for the web site uses an ElasticSearch index while the TAP, SIAP and SSAP services query our PostgreSQL metadata database. 
-Our Implementation of these protocols is available publicly as CASDA VO Tools \footnote{https://doi.org/10.25919/zy6w-h884}.
-All science data products are listed in the ObsCore view, however metadata for visibilities is limited. 
-Data access for all three access paths goes through the same module implementing the Datalink and SODA protocols. 
-Currently all data are held on tape and, if not already online, are recalled on demand to disc as part of the data access process. 
-We are working to move to an object store and have all data online.
 
-During deposit of data products we extract metadata from FITS and VOTable files including position and observation information.
-These are then stored in a PostgreSQL database which is directly queried by the VO services and is used to populate the ElasticSearch index.
-As part of the processing, validation reports are produced for each observation including quality metrics.
-These can be viewed on the website and queried via TAP.
-The science teams are also validating the data products and providing quality ratings and notes.
-These can be accessed via the website and the quality ratings can be found in all data-products in their ObsCore listing.
 
-\subsubsection{PSRDA}
-
-The Pulsar Data Archive (PSRDA) provides pulsar observations taken predominantly at the Parkes 64m radio telescope.
-All data are in PSRFITS format and data include both search and fold mode observations.
-The index of observations may be queried via TAP. Data access is only provided via the website \footnote{https://data.csiro.au}.
-
-During deposit, metadata such as target, central frequency, the frontend and backend used, and the duration of the observation are extracted from the FITS headers and stored in a PostgreSQL database.
-This is indexed by ElasticSearch for use in queries on the website.
-Currently all data are held on tape and, if not already online, are recalled on demand to disc as part of the data access process.
-Future work will bring all data online via an object store.
-
-\subsubsection{ATOA}
-
-The Australia Telescope Online Archive (ATOA) serves spectral line observations from both the Australia Telescope Compact Array (ATCA) and Parkes.
-Most ATCA data is in in the form of visibilities in RPFITS format, with files split by time and thus containing multiple sources and spectral windows.
-Older spectral line Parkes data are in SDFITS format while data from the latest Parkes receivers are in HDF5 format with metadata based on SDFITS.
-
-Metadata from the RPFITS, SDFITS and HDF5 files are retrieved as part of deposit processing and stored in a MySQL database. Web searches on the ATOA site \footnote{https://atoa.atnf.csiro.au/} use this database.
-A copy of the metadata is made to a PostgreSQL database where it is made available for TAP queries against an ObsCore schema. 
-All data are online and available to both web and VO users for download.
-
-\subsection{ASTRON}\label{sec:Astron}
-The Netherlands Institute for Radio Astronomy (ASTRON) is responsible for the operations of several radio astronomical facilities. The major surveys are and will be made accessible through the   {\href{https://vo.astron.nl/}{ASTRON VO service}}, running an instance of of DaCHS \citep{10.1016/j.ascom.2014.08.003}. Also, HiPS data is being offered through \href{https://hips.astron.nl/}{another service}. Currently, those services contain data from the Westerbork Synthesis Radio Telescope (WSRT), the Apertif system, the LOw Frequency ARray (LOFAR). Also, the Alternative Data Release of the the TIFR GMRT Sky Survey (TGSSADR), which is used as a sky model for LOFAR observations, is served through the ASTRON VO.
-
-Currently, all releases of data through the ASTRON VO have been of imaging surveys (like Apertf DR1 or LoTSS DR1). This data can be easily shared using the existing VO standards like SIAP2, TAP and ObsCore. Also since the image data format generally is FITS, the metadata gathering can be done in the same way as one would do it for other wavelengths. However, due to the fact that single images are taking up a lot of disk space, storage at an external location (e.g. a national supercompute centre) may be needed. We have developed tooling to only download the header from a remotely saved FITS file, and save it to csv format, so that not all data needs to be downloaded just to read their header. The csv files can then be used as input for the metadata gathering. For access to the data, DataLinks link to the remote resources. Also, we are investigating if this can be combined with using SODA cutouts to minimise the amount of data that is actually shipped to the end users.  
-
-One of the forthcoming data releases is that of the Apertif FRB data (ARTS-DR1). It is to be expected that more releases of timing data (pulars, FRBs, etc) will follow. Futhermore, LOFAR data from solar observations are candidates to be made public, which would require using of the appropriate standards for solar-system objects. 
-
-Visibilities are currently being shared as part of the metadata, as part of the provenance through DataLinks. Since all visibilities are stored on tapes, access to them cannot be granted sychronously. The current implementation uses a web page showing relevant information, with hints to users on how to request access through the helpdesk. For future data releases, we consider developing a UWS staging service that can handle the process of bringing data online. Even though directly querying visibilities from LOFAR or Apertif in the VO is not currently planned, ASTRON is involved in the development of visibilities standards, which could be used for specific data collections that may be released in the future. 
-
-\subsection{MERLIN}\label{sec:MERLIN}
 
 %\begin{figure}[h!]
 %\centering
