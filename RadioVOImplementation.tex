@@ -418,69 +418,52 @@ The source code for the new VO capabilities derives in part from the original As
 \subsection{INAF Radio Data}
 \label{sec:INAF}
 %from Alessandra
-INAF manages three fully steerable reflector antennas for radio astronomy: the 32m dishes at Medicina 
-and Noto and the 64m Sardinia Radio Telescope (SRT). These observing facilities can be used separately 
-as single-dish instruments (SD) or in a coordinated national network, sometimes joined by other EVN 
-facilities, that delivers VLBI interferometric data. Pulsar observations are supported in both single-
-dish and interferometric mode. The various raw data types (single dish, interferometric and pulsar) are 
-characterized by different output data formats: FITS, FITS-IDI and PSRFITS. Aiming at persistence and 
-future scientific exploitation of data, ancillary information contained in the observing schedules and 
-telescopes/correlator logs is archived in separate files for each dataset as well. The radio archive 
-database stores the metadata from the currently adopted formats and is capable to include further 
-instruments provided their data can be described by means of the general database (internal) radio 
-datamodel.
+INAF manages three fully steerable reflector antennas for radio
+astronomy: the 32m dishes at Medicina and Noto and the 64m
+Sardinia Radio Telescope (SRT). These observing facilities can be
+used separately as single dish instruments (SD) or in a coordinated
+national network, sometimes joined by other EVN facilities, that
+delivers VLBI interferometric data. Pulsar observations are supported 
+in both single-dish and interferometric mode. The various
+raw data types are characterized by different output data formats:
+FITS, FITS-IDI, PSRFITS and FILTERBANK. Ancillary information
+contained in the observing schedules and telescopes/correlator
+logs is archived in separate files for each dataset. The INAF radio
+archive stores continuum and spectropolarimetric raw data from
+single dish, pulsar and VLBI observations. Storage of processed
+data is planned once the Archive Science Gateway (including pro-
+cessing pipelines, an implementation of VOSpace, etc.) will be
+finalised.
 
-Currently the archive stores continuum and spectropolarimetric raw data from single dish, pulsar and 
-VLBI observations (in this last case the correlated visibilities are archived as raw data). Storage of 
-processed data is planned once the Archive Science Gateway and the User Space will be finalised. At that 
-point, processing pipelines, calibration and processing information as well as some level of quality 
-metrics will be provided.
+To promote the discovery, access and retrieval of data we are
+planning to increase the number of adopted IVOA standards or,
+at least, solutions that take into account the VO architecture.
 
-The Radio Archive is accessible through a dedicated web interface. According to INAF policies, to 
-guarantee the data proprietary period a Single-Sign-On login authentication mechanism is foreseen while 
-public data are available for download without user registration. In both public or private cases, users 
-perform dedicated queries in the Radio Archive by means of web forms. Query parameters can be common to 
-the various data types, like for instance the celestial object coordinates, or specific to the observing 
-mode, like the scan geometry for single dish or the subset of antennas for interferometric data. In 
-order to increase both the open data re-usage and the accessibility of scientific data to the 
-astronomical community and the general public, we are planning to adopt IVOA standards or, at least, 
-solutions that take into account the current and under-development VO architecture for radio astronomy.
+Global data discovery and access requires to expose a uniform,
+standard data model. To this aim, we have verified that the (internal) 
+radio archive data model maps to the ObsCore data model,
+at least for what concerns the mandatory elements. Moreover, for
+single dish data a comparative analysis between the radio archive
+model and the CAOM one has been performed and can potentially
+address some specific use cases for provenance, metadata annotation 
+and provide the basis for a more general discovery and access
+solution.
 
-Accurate characterisation of the dataset is mandatory given the variety of observing projects and the 
-heterogeneity of the data hosted in the Radio Archive. A thorough analysis of the necessary information 
-to be stored in the header has been conducted prior to the definition of the FITS metadata content for 
-single dish data. Additional provenance information for a specific dataset can be retrieved also in the 
-telescope log files and schedules, which are stored in the Archive as ancillary data. Other information 
-to describe e.g. the UV coverage of a specific interferometric dataset can be added in graphical form 
-but currently is yet to be implemented. Provenance information already stored as metadata in the raw 
-data files is, for instance, the unique project ID of the scientific program and the actor performing 
-the observation (Observer name). Other information on weather parameters and receiver performance (e.g. 
-wind conditions and system temperature) are saved in the ancillary associated files.
+An ObsTAP service, exposing an ObsCore table, is under
+preparation for the holdings of the Radio Archive. We are evaluating 
+the usage of the DataLink protocol to access the ancillary
+information associated with single dish raw datasets, namely the
+telescope log files and schedules. Other information to describe e.g.
+the UV coverage of a specific interferometric dataset can be added
+in graphical form but currently is yet to be implemented. Another
+DataLink use case could be relating additional metadata (for instance 
+provenance and data quality metrics) at different stages of
+the processing chain.
 
-A more accurate analysis of the Provenance information needed to document all the phases of data 
-reduction and assess the data products quality is planned in view of archiving also processed data.  
-Provenance information for processed data, once stored in the Archive, will be added in different ways. 
-Additional keywords will be used to describe the data reduction process with particular focus on the 
-calibration steps (including RFI or atmospheric opacity removal). Also, we plan to use accompanying 
-graphical plots to describe some specific characteristics of the data processing that benefit from a 
-more visual approach, for instance the stability in the counts-to-Jansky transformation during prolonged 
-observing sessions.
-
-Global data discovery and access requires to expose a uniform, standard data model. To this aim, we have 
-verified that the radio data model maps to the ObsCore data model, at least  for what concerns the 
-mandatory elements.
-
-A TAP service, exposing an ObsCore table, is under preparation for the holdings of the Radio Archive.
-
-A comparative analysis between the (internal) radio archive model and the CAOM one has been recently 
-performed and can potentially address some specific use cases for provenance, metadata annotation and 
-provide the basis for a more general discovery and access solution.
-
-We are evaluating the usage of the DataLink protocol to access complex datasets like those hosted in the 
-radio archive. For instance, to access single dish raw datasets, typically composed by a number of data 
-files organised in a hierarchical structure plus some additional files containing ancillary information 
-like the association with calibration files. Another DataLink use case could be relating additional 
-metadata (for instance provenance and data quality) at different stages of the processing chain.
+A more accurate analysis of the Provenance information (and
+its capture) needed to document all the phases of data reduction
+and assess the data products quality is planned in view of archiving
+also processed data.
 
 \subsection{The Joint Institute for VLBI in Europe}
 \label{sec:JIVE}
