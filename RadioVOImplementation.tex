@@ -7,7 +7,7 @@
 % see ivoatexDoc for what group names to use here
 \ivoagroup{Radio Astronomy interest group}
 
-\author[https://wiki.ivoa.net/twiki/bin/view/IVOA/HarrisonBarlow]{Harrison Barlow} 
+
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/FrancoisBonnarel]{Fran\c cois Bonnarel}
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/BaptisteCecconi]{Baptiste Cecconi}
 \author[https://wiki.ivoa.net/twiki/bin/view/IVOA/JamesDempsey]{James Dempsey}
@@ -188,10 +188,8 @@ rapid time variability in their radio emission. Data streams typically capture f
 with frequency and polarisation information, in the form of ``dynamic spectra".
 
 These products may be described with ObsCore and exposed through TAP or, in some cases, SIA. 
-Dataproduct\_type ``timeseries'' is ambiguous for dynamic spectra. The term ``dynamic-spectrum'' 
-has been recently added in the draft \emph{Data Product Type}\footnote{\url{https://www.ivoa.net/rdf/product-type/2021-06-21/product-type.html}}
-vocabulary (after a science case driven by EPN-TAP services and Pulsar data), and should be preferred in this case. 
-Such data are made available through JIVE 
+Dataproduct\_type ``timeseries" may be ambiguous for dynamic spectra, so a dataproduct\_subtype can be 
+used, or a new dataproduct\_type may be introduced. Such data are made available through JIVE 
 (section~\ref{sec:JIVE}) and Nan\c cay (section~\ref{sec:Nancay}) services and also by the Parkes Pulsar 
 Data Archive (PSRDA).
 
@@ -221,11 +219,6 @@ The IVOA does not promote specific formats. Visibilities may be provided as Meas
 RPFITS or UVFITS. Pulsar data are provided in PSRFITS and single dish data may use SDFITS or HDF5. An 
 important feature of IVOA is to be able to describe the media type (format) of the data before 
 retrieval. Extensions of the mime type vocabulary may be standardised in a near future.  
-
-In order to foster interoperability, consistent and eventually convergence, metadata mapping between
-the metadata of the community products and the IVOA models should be provided. The task should
-start with the various flavours of FITS described above, and should follow with the HDF5 flavours\footnote{See here for updated details: \url{https://www.astron.nl/lofarwiki/doku.php?id=public:documents:lofar_documents}} 
-\citep[see, e.g., the LOFAR HDF5 implementation, ][]{2011ASPC..442...53A}.
 
 \subsection{Interferometry}
 Complex visibilities can be discovered using three different services according to their relationship 
@@ -573,7 +566,7 @@ The MWA supports the implementation of various VO standards, which helps to ensu
 FAIR access principals. Our usage of some of these protocols are described below:
 \begin{itemize}
 \item TAP - The MWA ASVO provides an IVOA compliant Table Access Protocol (TAP) service, which can be 
-used by any VO/TAP compliant software such as TOPCAT to retrieve MWA observation metadata. Our TAP 
+used by any VO/TAP compliant software such as TOPCAT to retrieve WMA observation metadata. Our TAP 
 service supports the standard IVOA "ObsCore" schema, in addition to some new MWA-specific schema for 
 richer observation metadata. Our implementation is courtesy of CASDA VOTools 
 \url{https://github.com/csiro-rds/casda_vo_tools}.
